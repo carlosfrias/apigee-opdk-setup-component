@@ -1,8 +1,26 @@
 ---
 # tasks file for opdk-setup-component
-- name: Setup Apigee component for version {{ opdk_version }} or greater - {{ profile }}
-  shell: '{{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'
-  when: opdk_version | version_compare('4.16.01', '>=')
+- block:
+  - name: Setup Apigee component for version {{ opdk_version }} or greater - {{ profile }}
+    shell: '{{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'
+    when: opdk_version | version_compare('4.16.01', '>=')
+    register: setup
+
+  rescue:
+
+    - name: Rebooting node because selinux is not disabled
+      shell: 'reboot now'
+      when: "{{ ansible_selinux.status | lower != 'disabled' }}"
+
+    - name: Wait for node to restart
+      wait_for:
+        state: started
+        port: 22
+
+    - name: Setup Apigee component for version {{ opdk_version }} or greater - {{ profile }}
+      shell: '{{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'
+      when: opdk_version | version_compare('4.16.01', '>=')
+      register: setup
 
 - name: Obtain server self report - {{ profile }}
   ignore_errors: yes
