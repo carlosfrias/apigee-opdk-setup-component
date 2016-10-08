@@ -13,7 +13,7 @@ separately. It is assumed that files containing credentials are stored in the ~/
 Role Variables
 --------------
 
-Variable defaults are managed in the role opdk-setup-default-settings:
+Variable defaults are managed in the role apigee-opdk-setup-default-settings:
 
 Path to the Apigee setup script
 
@@ -46,7 +46,7 @@ Dependencies
 
 This role depends on the following roles:
 
-* opdk-setup-default-settings
+* apigee-opdk-setup-default-settings
 
 
 Example Playbook
