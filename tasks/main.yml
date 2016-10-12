@@ -14,4 +14,4 @@
 
 - name: Need to pause between component installation
   pause:
-    seconds: 1
+    seconds: '{{ network_pause }}'
