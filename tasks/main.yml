@@ -11,7 +11,6 @@
     - name: Checking to see if failure was real by starting the components
       ignore_errors: yes
       shell: '{{ apigee_all }} start'
-      register: start_cmd_report
       when: opdk_version | version_compare('4.16.01', '>=')
 
 
