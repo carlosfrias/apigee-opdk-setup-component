@@ -10,7 +10,7 @@
     pause:
       seconds: '{{ component_start_delay | default(10) }}'
 
-  - name: Checking to see if failure was real by starting the components
+  - name: Validating that component started
     shell: '{{ apigee_all }} start'
     when: opdk_version | version_compare('4.16.01', '>=')
 
