@@ -6,18 +6,20 @@
     shell: '{{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'
     when: opdk_version | version_compare('4.16.01', '>=')
 
+  - name: 10 second time delay for component boot
+    pause:
+      seconds: '{{ component_start_delay | default(10) }}'
+
   - name: Checking to see if failure was real by starting the components
-    ignore_errors: yes
     shell: '{{ apigee_all }} start'
     when: opdk_version | version_compare('4.16.01', '>=')
 
   rescue:
 
     - name: Checking to see if failure was real by starting the components
-      ignore_errors: yes
       shell: '{{ apigee_all }} start'
       when: opdk_version | version_compare('4.16.01', '>=')
 
-- name: Need to pause between component installation
+- name: Additional time delay for component boot
   pause:
-    seconds: '{{ network_pause }}'
+    minutes: '{{ component_start_delay | default(0) }}'
