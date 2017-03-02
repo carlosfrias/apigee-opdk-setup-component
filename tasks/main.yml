@@ -11,13 +11,21 @@
       seconds: '{{ component_start_delay | default(10) }}'
 
   - name: Validating that component started
-    shell: '{{ apigee_all }} start'
+    shell: '{{ apigee_all }} status'
     when: opdk_version | version_compare('4.16.01', '>=')
 
   rescue:
 
     - name: Checking to see if failure was real by starting the components
       shell: '{{ apigee_all }} start'
+      when: opdk_version | version_compare('4.16.01', '>=')
+
+    - name: 10 second time delay for component boot
+      pause:
+        seconds: '{{ component_start_delay | default(10) }}'
+
+    - name: Validating that component started
+      shell: '{{ apigee_all }} status'
       when: opdk_version | version_compare('4.16.01', '>=')
 
 - name: Additional time delay for component boot
