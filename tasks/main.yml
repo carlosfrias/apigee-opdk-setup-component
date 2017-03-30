@@ -3,24 +3,24 @@
 - block:
 
   - name: Install Apigee component for version {{ opdk_version }} or greater - {{ profile }}
-    shell: '{{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'
+    command: '{{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'
     when: opdk_version | version_compare('4.16.01', '>=')
 
   - name: Wait for ready
-    shell: '{{ apigee_all }} wait_for_ready'
+    command: '{{ apigee_all }} wait_for_ready'
     when: validate_ready | default(true)
 
   rescue:
 
     - name: Validate status failed, trying component start...
-      shell: '{{ apigee_all }} start'
+      command: '{{ apigee_all }} start'
       when: opdk_version | version_compare('4.16.01', '>=')
 
     - name: Wait for ready
-      shell: '{{ apigee_all }} wait_for_ready'
+      command: '{{ apigee_all }} wait_for_ready'
       when: validate_ready | default(true)
 
 - name: Validate component status
-  shell: '{{ apigee_all }} status'
+  command: '{{ apigee_all }} status'
   when: opdk_version | version_compare('4.16.01', '>=')
 
