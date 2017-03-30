@@ -6,6 +6,9 @@
     shell: '{{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'
     when: opdk_version | version_compare('4.16.01', '>=')
 
+  - name: Wait for ready
+    shell: '{{ apigee_all }} wait_for_ready'
+
   - name: Small time delay for component boot, change with -e component_start_delay=
     pause:
       seconds: '{{ component_start_delay | default(1) }}'
@@ -19,6 +22,9 @@
     - name: Validate status failed, trying component start...
       shell: '{{ apigee_all }} start'
       when: opdk_version | version_compare('4.16.01', '>=')
+
+    - name: Wait for ready
+      shell: '{{ apigee_all }} wait_for_ready'
 
     - name: Small time delay for component boot, change with -e component_start_delay=
       pause:
