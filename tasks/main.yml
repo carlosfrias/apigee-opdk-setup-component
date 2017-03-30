@@ -8,6 +8,7 @@
 
   - name: Wait for ready
     shell: '{{ apigee_all }} wait_for_ready'
+    when: validate_ready | default(true)
 
   rescue:
 
@@ -15,8 +16,9 @@
       shell: '{{ apigee_all }} start'
       when: opdk_version | version_compare('4.16.01', '>=')
 
-- name: Wait for ready
-  shell: '{{ apigee_all }} wait_for_ready'
+    - name: Wait for ready
+      shell: '{{ apigee_all }} wait_for_ready'
+      when: validate_ready | default(true)
 
 - name: Validate component status
   shell: '{{ apigee_all }} status'
