@@ -17,6 +17,7 @@
       when: opdk_version | version_compare('4.16.01', '>=')
 
     - name: Wait for ready
+      ignore_errors: "{{ ignore_errors | default('no') }}"
       command: '{{ apigee_all }} wait_for_ready'
       when: validate_ready | default(true)
 
