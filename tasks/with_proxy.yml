@@ -1,0 +1,15 @@
+---
+- name: Install Apigee component for version {{ opdk_version }} or greater - {{ profile }}
+  command: '{{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'
+  when: opdk_version | version_compare('4.16.01', '>=')
+  environment:
+    http_proxy: "{{ http_proxy }}"
+    https_proxy: "{{ https_proxy }}"
+
+- name: Wait for ready
+  command: '{{ apigee_all }} wait_for_ready'
+  when: validate_ready | default(true)
+  environment:
+    http_proxy: "{{ http_proxy }}"
+    https_proxy: "{{ https_proxy }}"
+
