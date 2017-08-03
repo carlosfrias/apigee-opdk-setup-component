@@ -10,8 +10,4 @@
 - name: Wait for ready
   command: '{{ apigee_all }} wait_for_ready'
   when: validate_ready | default(true)
-  environment:
-    no_proxy: "{{ no_proxy }}"
-    http_proxy: "{{ http_proxy }}"
-    https_proxy: "{{ https_proxy }}"
 
