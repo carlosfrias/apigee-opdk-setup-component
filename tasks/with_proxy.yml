@@ -3,6 +3,7 @@
   command: '{{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'
   when: opdk_version | version_compare('4.16.01', '>=')
   environment:
+    no_proxy: "{{ no_proxy }}"
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
 
@@ -10,6 +11,7 @@
   command: '{{ apigee_all }} wait_for_ready'
   when: validate_ready | default(true)
   environment:
+    no_proxy: "{{ no_proxy }}"
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
 
