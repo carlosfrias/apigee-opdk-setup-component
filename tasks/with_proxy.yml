@@ -11,7 +11,7 @@
 - name: Installation with proxy failed
   fail:
     msg: "Apigee Component failed"
-  when: result | failed
+  when: result.failed is defined and result.failed | bool
 
 - name: Wait for ready with no proxy
   command: '{{ apigee_all }} wait_for_ready'
