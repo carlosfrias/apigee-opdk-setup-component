@@ -4,11 +4,11 @@
 
   - name: Use no proxy definitions
     include: no_proxy.yml
-#    when: opdk_version | version_compare('4.16', '>=') and http_proxy is not defined and https_proxy is not defined
+    when: opdk_version | version_compare('4.16', '>=') and http_proxy is not defined and https_proxy is not defined
 
-#  - name: Use proxy definitions
-#    include: with_proxy.yml
-#    when: opdk_version | version_compare('4.16', '>=') and http_proxy is defined and https_proxy is defined
+  - name: Use proxy definitions
+    include: with_proxy.yml
+    when: opdk_version | version_compare('4.16', '>=') and http_proxy is defined and https_proxy is defined
 
   rescue:
 
