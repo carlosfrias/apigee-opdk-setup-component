@@ -1,7 +1,5 @@
 ---
 # tasks file for apigee-opdk-setup-component
-#- block:
-
 - name: Use no proxy definitions
   include: with_no_proxy.yml
   when: opdk_version | version_compare('4.16', '>=') and http_proxy is not defined and https_proxy is not defined
@@ -9,12 +7,6 @@
 - name: Use proxy definitions
   include: with_proxy.yml
   when: opdk_version | version_compare('4.16', '>=') and http_proxy is defined and https_proxy is defined
-
-#  rescue:
-#
-#    - name: Validate status failed, trying component start...
-#      command: '{{ apigee_all }} start'
-#      when: opdk_version | version_compare('4.16.01', '>=')
 
 - name: Wait for ready
   ignore_errors: "{{ ignore_errors | default('no') }}"
