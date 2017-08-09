@@ -10,7 +10,7 @@
 
 - name: Installation with proxy failed
   fail:
-    msg: "Apigee Component failed
+    msg: "Apigee Component failed"
   when: result | failed
 
 - name: Wait for ready with no proxy
