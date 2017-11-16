@@ -1,12 +1,39 @@
 ---
 # tasks file for apigee-opdk-setup-component
-- name: Use no proxy definitions
-  include: with_no_proxy.yml
-  when: https_proxy is not defined or https_proxy | trim == '' and http_proxy is not defined or http_proxy | trim == ''
+#- name: Use no proxy definitions
+#  include: with_no_proxy.yml
+#  when: https_proxy is not defined or https_proxy | trim == '' and http_proxy is not defined or http_proxy | trim == ''
+#
+#- name: Use proxy definitions
+#  include: with_proxy.yml
+#  when: https_proxy is defined and https_proxy | trim != '' and http_proxy is defined and http_proxy | trim != ''
 
-- name: Use proxy definitions
-  include: with_proxy.yml
-  when: https_proxy is defined and https_proxy | trim != '' and http_proxy is defined and http_proxy | trim != ''
+- name: Install Apigee component for version {{ opdk_version }} or greater with proxy - {{ profile }}
+  become: yes
+  command: '{{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'
+  environment:
+    http_proxy: "{{ http_proxy }}"
+    https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy }}"
+    PORT_TIMEOUT: '{{ port_timeout | default(60) }}'
+    UP_TIMEOUT: '{{ up_timeout | default(60) }}'
+  when: opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
+
+- name: DEBUG_MODE - Install Apigee component for version {{ opdk_version }} or greater with proxy - {{ profile }}
+  become: yes
+  command: 'bash -x {{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'
+  environment:
+    http_proxy: "{{ http_proxy }}"
+    https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy }}"
+    PORT_TIMEOUT: '{{ port_timeout | default(60) }}'
+    UP_TIMEOUT: '{{ up_timeout | default(60) }}'
+  when: opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
+
+- name: Wait for ready with no proxy
+  become: yes
+  command: '{{ apigee_all }} wait_for_ready'
+  when: validate_ready | default(true)
 
 - name: Wait for ready
   become: yes
