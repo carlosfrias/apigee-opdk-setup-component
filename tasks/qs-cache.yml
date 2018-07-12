@@ -7,4 +7,3 @@
   - { key: 'qpid_stat', value: '{{ apigee_home }}/apigee-qpidd/bin/qpid-stat' }
   - { key: 'check_queue_depth', value: '{{ apigee_home }}/apigee-qpidd/bin/check_queue_depth.py' }
 
-
