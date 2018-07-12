@@ -1,5 +1,14 @@
 ---
 # tasks file for apigee-opdk-setup-component
+- name: Determine if CLI utilities are available
+  stat:
+    path: "{{ profile }}.yml"
+  register: cli
+
+- name: Load CLI utilities
+  include_tasks: "{{ profile }}.yml"
+  when: cli.stat.exists
+
 - name: Install Apigee component for version {{ opdk_version }} or greater with proxy - {{ profile }}
   become: yes
   command: '{{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'

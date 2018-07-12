@@ -1,0 +1,10 @@
+---
+- name: Setup utilities in cache
+  cache:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+  - { key: 'nodetool', value: '{{ nodetool }}' }
+  - { key: 'cqlsh', value: '{{ cqlsh }}' }
+  - { key: 'cassandra_cli', value: '{{ cassandra_cli }}' }
+

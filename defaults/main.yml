@@ -4,4 +4,11 @@ apigee_home: /opt/apigee
 apigee_setup: '{{ apigee_home }}/apigee-setup/bin/setup.sh'
 apigee_all: '{{ apigee_home }}/apigee-service/bin/apigee-all'
 
+# Cassandra nodetool command
+nodetool: '{{ apigee_home }}/apigee-cassandra/bin/nodetool'
 
+# Cassandra cqlsh command
+cqlsh: '{{ apigee_home }}/apigee-cassandra/bin/cqlsh'
+
+# Cassandra command line command
+cassandra_cli: '{{ apigee_home }}/apigee-cassandra/bin/cassandra-cli'
