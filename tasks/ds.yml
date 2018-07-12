@@ -4,7 +4,7 @@
     key: "{{ item.key }}"
     value: "{{ item.value }}"
   with_items:
-  - { key: 'nodetool', value: '{{ nodetool }}' }
-  - { key: 'cqlsh', value: '{{ cqlsh }}' }
-  - { key: 'cassandra_cli', value: '{{ cassandra_cli }}' }
+  - { key: 'nodetool', value: '{{ apigee_home }}/apigee-cassandra/bin/nodetool' }
+  - { key: 'cqlsh', value: '{{ apigee_home }}/apigee-cassandra/bin/cqlsh' }
+  - { key: 'cassandra_cli', value: '{{ apigee_home }}/apigee-cassandra/bin/cassandra-cli' }
 
