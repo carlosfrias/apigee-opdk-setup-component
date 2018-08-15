@@ -10,27 +10,9 @@
   when: cache_attrib.stat.exists
 
 - block:
-  - name: Install Apigee component {{ profile }} for Private Cloud {{ opdk_version }}
-    become: yes
-    command: '{{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'
-    environment:
-      http_proxy: "{{ http_proxy }}"
-      https_proxy: "{{ https_proxy }}"
-      no_proxy: "{{ no_proxy }}"
-      PORT_TIMEOUT: '{{ port_timeout | default(60) }}'
-      UP_TIMEOUT: '{{ up_timeout | default(60) }}'
-    when: opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
+  - name: Include Apigee setup commands
+    include_tasks: setup-apigee-component.yml
 
-  - name: DEBUG_MODE - Install Apigee component {{ profile }} for Private Cloud {{ opdk_version }}
-    become: yes
-    command: '/usr/bin/bash -x {{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'
-    environment:
-      http_proxy: "{{ http_proxy }}"
-      https_proxy: "{{ https_proxy }}"
-      no_proxy: "{{ no_proxy }}"
-      PORT_TIMEOUT: '{{ port_timeout | default(60) }}'
-      UP_TIMEOUT: '{{ up_timeout | default(60) }}'
-    when: opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
   rescue:
     - name: Determine if Rescue action is available
       stat:

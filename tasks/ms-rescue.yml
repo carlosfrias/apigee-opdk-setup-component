@@ -1,0 +1,18 @@
+---
+- name: Set fact that indicates nodetool failing to connect
+  set_fact:
+    nodetool_connection_failure: true
+  when: apigee_setup_results | search ('Connection refused') and apigee_setup_results | search (':7199')
+
+- name: Set cassandra-env.sh JVM_OPTS
+  replace:
+    path: "{{ apigee_home }}/apigee-cassandra-clients/conf/cassandra-env.sh"
+    regexp: '(# JVM_OPTS="$JVM_OPTS -Djava.rmi.server.hostname=)<public name>'
+    replace: '\1127.0.0.1'
+    backup: yes
+    owner: "{{ opdk_user_name }}"
+    group: "{{ opdk_group_name }}"
+
+- name: Include Apigee setup commands from attempted rescue
+  include_tasks: setup-apigee-component.yml
+
