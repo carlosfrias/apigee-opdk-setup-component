@@ -3,7 +3,7 @@
 - name: Determine if Cache attributes is available
   tags: ['cache']
   stat:
-    path: "{{ profile }}-cache.yml"
+    path: "./{{ profile }}-cache.yml"
   register: cache_attrib
 
 - name: Cache attributes attributes
