@@ -1,14 +1,14 @@
 ---
 # tasks file for apigee-opdk-setup-component
-- name: Determine if Cache attributes is available
-  tags: ['cache']
-  stat:
-    path: "./{{ profile }}-cache.yml"
-  register: cache_attrib
+#- name: Determine if Cache attributes is available
+#  stat:
+#    path: "./{{ profile }}-cache.yml"
+#  register: cache_attrib
 
 - name: Cache attributes attributes
+  tags: ['cache']
   include_tasks: "{{ profile }}-cache.yml"
-  when: cache_attrib.stat.exists
+#  when: cache_attrib.stat.exists
 
 - block:
   - name: Include Apigee setup commands
