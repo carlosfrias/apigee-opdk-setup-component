@@ -17,19 +17,19 @@
     include_tasks: setup-apigee-component.yml
 
   rescue:
-    - name: Determine if Rescue action is available
-      stat:
-        path: "{{ profile }}-rescue.yml"
-      register: rescue
+#    - name: Determine if Rescue action is available
+#      stat:
+#        path: "{{ profile }}-rescue.yml"
+#      register: rescue
 
     - name: Rescue for Apigee component installation
       include_tasks: "{{ profile }}-rescue.yml"
       when: rescue.stat.exists
 
-    - name: Rescue is not available
-      fail:
-         msg: 'Rescue is not available'
-      when: rescue.stat.exists == false
+#    - name: Rescue is not available
+#      fail:
+#         msg: 'Rescue is not available'
+#      when: rescue.stat.exists == false
 
 - name: Wait for ready
   become: yes
