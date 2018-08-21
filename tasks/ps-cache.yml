@@ -1,5 +1,4 @@
 ---
----
 - name: Setup utilities in cache
   tags: ['cache']
   cache:
