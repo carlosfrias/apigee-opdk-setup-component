@@ -1,5 +1,6 @@
 ---
 - name: Setup utilities in cache
+  tags: ['cache']
   cache:
     key: "{{ item.key }}"
     value: "{{ item.value }}"
