@@ -1,0 +1,51 @@
+---
+- block:
+
+  - name: Setup utilities in cache
+    tags: ['cache']
+    cache:
+      key: "{{ item.key }}"
+      value: "{{ item.value }}"
+    with_items:
+    - { key: 'nodetool', value: '{{ apigee_home }}/apigee-cassandra/bin/nodetool' }
+    - { key: 'cqlsh', value: '{{ apigee_home }}/apigee-cassandra/bin/cqlsh' }
+    - { key: 'cassandra_cli', value: '{{ apigee_home }}/apigee-cassandra/bin/cassandra-cli' }
+
+  when: profile is defined and profile == 'ds'
+
+- block:
+
+  - name: Setup utilities in cache
+    tags: ['cache']
+    cache:
+      key: "{{ item.key }}"
+      value: "{{ item.value }}"
+    with_items:
+    - { key: 'ldapsearch', value: '/usr/bin/ldapsearch' }
+
+  when: profile is defined and profile == 'ms'
+
+- block:
+
+  - name: Setup utilities in cache
+    tags: ['cache']
+    cache:
+      key: "{{ item.key }}"
+      value: "{{ item.value }}"
+    with_items:
+    - { key: 'psql', value: '"/usr/bin/psql"' }
+
+  when: profile is defined and profile == 'ps'
+
+- block:
+
+  - name: Setup utilities in cache
+    tags: ['cache']
+    cache:
+      key: "{{ item.key }}"
+      value: "{{ item.value }}"
+    with_items:
+    - { key: 'qpid_stat', value: '{{ apigee_home }}/apigee-qpidd/bin/qpid-stat' }
+    - { key: 'check_queue_depth', value: '{{ apigee_home }}/apigee-qpidd/bin/check_queue_depth.py' }
+
+  when: profile is defined and profile == 'qs'

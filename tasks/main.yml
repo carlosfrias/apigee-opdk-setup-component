@@ -1,35 +1,17 @@
 ---
 # tasks file for apigee-opdk-setup-component
-#- name: Determine if Cache attributes is available
-#  tags: ['cache']
-#  stat:
-#    path: "{{ profile }}-cache.yml"
-#  register: cache_attrib
-
 - name: Cache attributes attributes
-  ignore_errors: True
   tags: ['cache']
-  include_tasks: "{{ profile }}-cache.yml"
-#  when: cache_attrib.stat.exists
+  include_tasks: "cache.yml"
 
 - block:
   - name: Include Apigee setup commands
     include_tasks: setup-apigee-component.yml
 
   rescue:
-#    - name: Determine if Rescue action is available
-#      stat:
-#        path: "{{ profile }}-rescue.yml"
-#      register: rescue
-
     - name: Rescue for Apigee component installation
       include_tasks: "{{ profile }}-rescue.yml"
       when: rescue.stat.exists
-
-#    - name: Rescue is not available
-#      fail:
-#         msg: 'Rescue is not available'
-#      when: rescue.stat.exists == false
 
 - name: Wait for ready
   become: yes
