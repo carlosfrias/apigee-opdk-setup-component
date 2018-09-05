@@ -2,7 +2,6 @@
 - name: Install Apigee component {{ profile }} for Private Cloud {{ opdk_version }}
   become: yes
   command: '{{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'
-  register: apigee_setup_results
   environment:
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
@@ -14,7 +13,6 @@
 - name: DEBUG_MODE - Install Apigee component {{ profile }} for Private Cloud {{ opdk_version }}
   become: yes
   command: '/usr/bin/bash -x {{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'
-  register: apigee_setup_results
   environment:
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
