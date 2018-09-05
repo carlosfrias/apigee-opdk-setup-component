@@ -11,7 +11,7 @@
   rescue:
     - name: Rescue for Apigee component installation
       include_tasks: "{{ profile }}-rescue.yml"
-      when: rescue.stat.exists
+      when: apigee_setup_results.stat.exists
 
 - name: Wait for ready
   become: yes
