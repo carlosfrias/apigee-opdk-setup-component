@@ -10,7 +10,7 @@
 
   rescue:
     - name: Rescue for Apigee component installation
-      include_tasks: "{{ profile }}-rescue.yml"
+      include_tasks: "rescue.yml"
 
 - name: Wait for ready
   become: yes
