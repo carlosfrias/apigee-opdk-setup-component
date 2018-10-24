@@ -3,7 +3,7 @@
   - name: Set fact that indicates nodetool failing to connect
     set_fact:
       nodetool_connection_failure: true
-    when: apigee_setup_results.stdout | search ('nodetool: Failed to connect to') and apigee_setup_results.stdout | search('Connection refused ('Error: Unable to connect to') and apigee_setup_results.stdout | search (':7199')
+    when: apigee_setup_results.stdout | search ('nodetool: Failed to connect to') and apigee_setup_results.stdout | search('Connection refused ') and apigee_setup_results.stdout | search (':7199')
 
   - block:
     - name: Set cassandra-env.sh JVM_OPTS
