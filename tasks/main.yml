@@ -38,14 +38,14 @@
     - name: Attempt to start component anyway
       shell: "{{ apigee_all }} start"
 
-- name: Wait for ready
-  become: yes
-  command: '{{ apigee_all }} wait_for_ready'
-  when: validate_ready | default(true)
-  environment:
-    http_proxy: "{{ http_proxy | default('') }}"
-    https_proxy: "{{ https_proxy | default('') }}"
-    no_proxy: "{{ no_proxy | default('') }}"
+#- name: Wait for ready
+#  become: yes
+#  command: '{{ apigee_all }} wait_for_ready'
+#  when: validate_ready | default(true)
+#  environment:
+#    http_proxy: "{{ http_proxy | default('') }}"
+#    https_proxy: "{{ https_proxy | default('') }}"
+#    no_proxy: "{{ no_proxy | default('') }}"
 
 - name: Show component status
   become: yes
