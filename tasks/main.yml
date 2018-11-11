@@ -4,52 +4,52 @@
   tags: ['cache']
   include_tasks: "cache.yml"
 
-- name: Set for cassandra folder
-  set_fact:
-    create_folder: "{{ apigee_home }}/apigee-cassandra"
-  when: profile == 'ds'
-
-- name: Set for zookeeper folder
-  set_fact:
-    create_folder: "{{ apigee_home }}/apigee-zookeeper"
-  when: profile == 'zk'
-
-- name: Set for management server folder
-  set_fact:
-    create_folder: "{{ apigee_home }}/edge-management-server"
-  when: profile == 'ms'
-
-- name: Set for router folder
-  set_fact:
-    create_folder: "{{ apigee_home }}/edge-router"
-  when: profile == 'r' or profile == 'rmp'
-
-- name: Set for message processor folder
-  set_fact:
-    create_folder: "{{ apigee_home }}/edge-message-processor"
-  when: profile == 'mp'
-
-- name: Set for message processor folder
-  set_fact:
-    create_folder: "{{ apigee_home }}/edge-ui"
-  when: profile == 'ui'
-
-- name: Set for qpid folder
-  set_fact:
-    create_folder: "{{ apigee_home }}/apigee-qpidd"
-  when: profile == 'qs'
-
-- name: Set for postgresql folder
-  set_fact:
-    create_folder: "{{ apigee_home }}/apigee-postgresql"
-  when: profile == 'ps'
+#- name: Set for cassandra folder
+#  set_fact:
+#    create_folder: "{{ apigee_home }}/apigee-cassandra"
+#  when: profile == 'ds'
+#
+#- name: Set for zookeeper folder
+#  set_fact:
+#    create_folder: "{{ apigee_home }}/apigee-zookeeper"
+#  when: profile == 'zk'
+#
+#- name: Set for management server folder
+#  set_fact:
+#    create_folder: "{{ apigee_home }}/edge-management-server"
+#  when: profile == 'ms'
+#
+#- name: Set for router folder
+#  set_fact:
+#    create_folder: "{{ apigee_home }}/edge-router"
+#  when: profile == 'r' or profile == 'rmp'
+#
+#- name: Set for message processor folder
+#  set_fact:
+#    create_folder: "{{ apigee_home }}/edge-message-processor"
+#  when: profile == 'mp'
+#
+#- name: Set for message processor folder
+#  set_fact:
+#    create_folder: "{{ apigee_home }}/edge-ui"
+#  when: profile == 'ui'
+#
+#- name: Set for qpid folder
+#  set_fact:
+#    create_folder: "{{ apigee_home }}/apigee-qpidd"
+#  when: profile == 'qs'
+#
+#- name: Set for postgresql folder
+#  set_fact:
+#    create_folder: "{{ apigee_home }}/apigee-postgresql"
+#  when: profile == 'ps'
 
 - block:
   - name: Install Apigee component {{ profile }} for Private Cloud {{ opdk_version }}
     become: yes
     command: '{{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'
-    args:
-      creates: "{{ create_folder }}"
+#    args:
+#      creates: "{{ create_folder }}"
     environment:
       http_proxy: "{{ http_proxy | default('') }}"
       https_proxy: "{{ https_proxy | default('') }}"
@@ -61,8 +61,8 @@
   - name: DEBUG_MODE - Install Apigee component {{ profile }} for Private Cloud {{ opdk_version }}
     become: yes
     command: '/usr/bin/bash -x {{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'
-    args:
-      creates: "{{ create_folder }}"
+#    args:
+#      creates: "{{ create_folder }}"
     environment:
       http_proxy: "{{ http_proxy | default('') }}"
       https_proxy: "{{ https_proxy | default('') }}"
