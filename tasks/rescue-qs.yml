@@ -1,0 +1,43 @@
+---
+#- block:
+#  - name: Set fact that indicates nodetool failing to connect
+#    set_fact:
+#      nodetool_connection_failure: true
+#    when: apigee_setup_results.stdout | search ('nodetool: Failed to connect to') and apigee_setup_results.stdout | search('Connection refused') and apigee_setup_results.stdout | search (':7199')
+#
+#  - block:
+#    - name: Set cassandra-env.sh JVM_OPTS
+#      replace:
+#        path: "{{ apigee_home }}/apigee-cassandra-clients/conf/cassandra-env.sh"
+#        regexp: '(# JVM_OPTS="$JVM_OPTS -Djava.rmi.server.hostname=)'
+#        replace: "\1{{ group[ds][0]['private_address'] }}"
+#        backup: yes
+#        owner: "{{ opdk_user_name }}"
+#        group: "{{ opdk_group_name }}"
+#
+#    - name: Include Apigee setup commands from attempted rescue
+#      include_tasks: setup-apigee-component.yml
+#
+#    when: nodetool_connection_failure is true
+#
+#  when: profile is defined and profile == 'ms'
+
+- name: Ensure that yum support is installed
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - yum-utils
+  - yum-plugin-priorities
+
+- name: Use Apigee Qpid Work Around
+  become: true
+  shell: yum --setopt=obsoletes=0 install apigee-qpidd -y
+
+- name: Install Apigee Qpid Component
+  import_role:
+    name: apigee-opdk-setup-component
+  vars:
+    profile: 'qs'
+
+
