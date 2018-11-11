@@ -29,6 +29,11 @@
     create_folder: "{{ apigee_home }}/edge-message-processor"
   when: profile == 'mp'
 
+- name: Set for message processor folder
+  set_fact:
+    create_folder: "{{ apigee_home }}/edge-ui"
+  when: profile == 'ui'
+
 - name: Set for qpid folder
   set_fact:
     create_folder: "{{ apigee_home }}/apigee-qpidd"
@@ -37,7 +42,7 @@
 - name: Set for postgresql folder
   set_fact:
     create_folder: "{{ apigee_home }}/apigee-postgresql"
-  when: profile == 'pg'
+  when: profile == 'ps'
 
 - block:
   - name: Install Apigee component {{ profile }} for Private Cloud {{ opdk_version }}
@@ -71,6 +76,6 @@
       include_tasks: rescue-qs.yml
       when: profile == 'qs'
 
-    - name: Attempt to start component anyway
+    - name: Attempt to start component
       shell: "{{ apigee_all }} start"
 
