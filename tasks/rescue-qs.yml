@@ -23,6 +23,7 @@
 #  when: profile is defined and profile == 'ms'
 
 - name: Ensure that yum support is installed
+  become: true
   yum:
     name: "{{ item }}"
     state: present
