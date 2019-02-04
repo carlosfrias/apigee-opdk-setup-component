@@ -7,7 +7,7 @@
 - block:
   - name: Install Apigee component {{ profile }} for Private Cloud {{ opdk_version }}
     become: yes
-    command: '{{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'
+    command: '{{ apigee_setup }} -p {{ profile }} -f {{ target_response_file_path }}'
 #    args:
 #      creates: "{{ create_folder }}"
     environment:
@@ -20,7 +20,7 @@
 
   - name: DEBUG_MODE - Install Apigee component {{ profile }} for Private Cloud {{ opdk_version }}
     become: yes
-    command: '/usr/bin/bash -x {{ apigee_setup }} -p {{ profile }} -f {{ opdk_installation_config_file }}'
+    command: '/usr/bin/bash -x {{ apigee_setup }} -p {{ profile }} -f {{ target_response_file_path }}'
 #    args:
 #      creates: "{{ create_folder }}"
     environment:
