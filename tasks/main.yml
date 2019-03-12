@@ -25,7 +25,7 @@
       no_proxy: "{{ no_proxy | default('') }}"
       PORT_TIMEOUT: '{{ port_timeout | default(60) }}'
       UP_TIMEOUT: '{{ up_timeout | default(60) }}'
-    when: (opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off') and (test_only is defined and {{ test_only | default(False) }} )
+    when: (opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off') and (test_only is defined and test_only | default(False) )
 
   - name: DEBUG_MODE - Install Apigee component {{ profile }} for Private Cloud {{ opdk_version }}
     become: yes
