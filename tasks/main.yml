@@ -44,6 +44,9 @@
          msg: 'Rescue is not available'
       when: rescue.stat.exists == false
 
+- name: Attempt to start component
+  shell: "{{ apigee_all }} start"
+
 - block:
   - name: Determine if streaming repair is needed
     set_fact:
@@ -59,12 +62,4 @@
   become: yes
   command: '{{ apigee_all }} wait_for_ready'
   when: validate_ready | default(true)
-
-  rescue:
-    - name: Recovery for Qpid components
-      include_tasks: rescue-qs.yml
-      when: profile == 'qs'
-
-    - name: Attempt to start component
-      shell: "{{ apigee_all }} start"
 
