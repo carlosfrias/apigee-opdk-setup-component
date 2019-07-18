@@ -47,17 +47,6 @@
 - name: Attempt to start component
   shell: "{{ apigee_all }} start"
 
-- block:
-  - name: Determine if streaming repair is needed
-    set_fact:
-       repair_required: "{{ setup_log.stdout in search('NODE MUST BE DECOMMISSIONED AND BOOTSTRAPPED')  | default(False) }}"
-
-  - name: Repair node
-    import_role:
-      name: apigee-opdk-cassandra-repair
-
-  when: profile == "ds"
-
 - name: Wait for ready with no proxy
   become: yes
   command: '{{ apigee_all }} wait_for_ready'
