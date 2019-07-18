@@ -30,33 +30,19 @@
     register: setup_log
 
   rescue:
-    - name: Repair node
-      import_role:
-        name: apigee-opdk-cassandra-repair
-      when: profile == 'ds'
+    - name: Determine if Rescue action is available
+      stat:
+        path: "rescue-{{ profile }}.yml"
+      register: rescue
 
-    - block:
+    - name: Rescue for Apigee component installation
+      include_tasks: "rescue-{{ profile }}.yml"
+      when: rescue.stat.exists
 
-      - name: Ensure that yum support is installed
-        become: true
-        yum:
-          name: "{{ item }}"
-          state: present
-        with_items:
-          - yum-utils
-          - yum-plugin-priorities
-
-      - name: Use Apigee Qpid Work Around
-        become: true
-        shell: yum --setopt=obsoletes=0 install apigee-qpidd -y
-
-      - name: Install Apigee Qpid Component
-        import_role:
-          name: apigee-opdk-setup-component
-        vars:
-          profile: 'qs'
-
-      when: profile == 'qs'
+    - name: Rescue is not available
+      fail:
+        msg: 'Rescue is not available'
+      when: rescue.stat.exists == false
 
 - name: Attempt to start component
   shell: "{{ apigee_all }} start"
