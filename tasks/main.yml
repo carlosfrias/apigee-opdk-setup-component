@@ -32,11 +32,11 @@
   rescue:
     - name: Determine if Rescue action is available
       stat:
-        path: "rescue-{{ profile }}.yml"
+        path: "{{ role_path }}/main/rescue-{{ profile }}.yml"
       register: rescue
 
     - name: Rescue for Apigee component installation
-      include_tasks: "rescue-{{ profile }}.yml"
+      include_tasks: "{{ role_path }}/main/rescue-{{ profile }}.yml"
       when: rescue.stat.exists
 
     - name: Rescue is not available
