@@ -6,7 +6,7 @@
 
 - name: Assert installation folder name
   set_fact:
-    folder_name: "{{ apigee_home }}/{{ folder_names.profile }}"
+    folder_name: "{{ apigee_home }}/{{ folder_names[profile] }}"
 
 - name: Assert existance of folder
   stat:
