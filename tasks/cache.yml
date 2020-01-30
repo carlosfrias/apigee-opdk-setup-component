@@ -2,7 +2,6 @@
 - block:
 
   - name: Setup utilities in cache
-    tags: ['cache']
     set_fact:
       cacheable: yes
       nodetool: '{{ apigee_home }}/apigee-cassandra/bin/nodetool'
@@ -14,7 +13,6 @@
 - block:
 
   - name: Setup utilities in cache
-    tags: ['cache']
     set_fact:
       cacheable: yes
       ldapsearch: '/usr/bin/ldapsearch'
@@ -24,7 +22,6 @@
 - block:
 
   - name: Setup utilities in cache
-    tags: ['cache']
     set_fact:
       cacheable: yes
       psql: '"/usr/bin/psql"'
@@ -34,7 +31,6 @@
 - block:
 
   - name: Setup utilities in cache
-    tags: ['cache']
     set_fact:
       cacheable: yes
       qpid_stat: '{{ apigee_home }}/apigee-qpidd/bin/qpid-stat'

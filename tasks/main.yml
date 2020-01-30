@@ -1,17 +1,7 @@
 ---
 # tasks file for apigee-opdk-setup-component
 - name: Cache attributes attributes
-  tags: ['cache']
   include_tasks: "cache.yml"
-
-#- name: Assert installation folder name
-#  set_fact:
-#    folder_name: "{{ apigee_home }}/{{ folder_names[profile] }}"
-#
-#- name: Assert existance of folder
-#  stat:
-#    path: "{{ folder_name }}"
-#  when: folder_exists
 
 - block:
   - name: Install Apigee component {{ profile }} for Private Cloud {{ opdk_version }}
@@ -36,31 +26,6 @@
     when: opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
     register: setup_log
   become: yes
-#  when: folder_exists.stat.exist
-#
-#- block:
-#  - name: Install Apigee component {{ profile }} for Private Cloud {{ opdk_version }}
-#    command: '{{ apigee_setup }} -p {{ profile }} -f {{ target_response_file_path }}'
-#    environment:
-#      http_proxy: "{{ http_proxy | default('') }}"
-#      https_proxy: "{{ https_proxy | default('') }}"
-#      no_proxy: "{{ no_proxy | default('') }}"
-#      PORT_TIMEOUT: '{{ port_timeout | default(60) }}'
-#      UP_TIMEOUT: '{{ up_timeout | default(60) }}'
-#    when: opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
-#    register: setup_log
-#
-#  - name: Test Only Install Apigee component {{ profile }} for Private Cloud {{ opdk_version }}
-#    command: '{{ apigee_setup }} -p {{ profile }} -f {{ target_response_file_path }} -t'
-#    environment:
-#      http_proxy: "{{ http_proxy | default('') }}"
-#      https_proxy: "{{ https_proxy | default('') }}"
-#      no_proxy: "{{ no_proxy | default('') }}"
-#      PORT_TIMEOUT: '{{ port_timeout | default(60) }}'
-#      UP_TIMEOUT: '{{ up_timeout | default(60) }}'
-#    when: opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
-#    register: setup_log
-#  when: is not folder_exists.stat.exist
 
   rescue:
     - name: Build path to rescue script
