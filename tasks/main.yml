@@ -42,8 +42,8 @@
       include_tasks: "{{ rescue_script_path }}"
       when: rescue.stat.exists
 
-    - name: Rescue is not available
-      fail:
-        msg: 'Rescue is not available'
-      when: rescue.stat.exists == false
+#    - name: Rescue is not available
+#      fail:
+#        msg: 'Rescue is not available'
+#      when: rescue.stat.exists == false
 
