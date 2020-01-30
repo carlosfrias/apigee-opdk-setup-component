@@ -31,7 +31,7 @@
     - name: Build path to rescue script
       set_fact:
         cacheable: True
-        rescue_script_path: "{{ role_path }}/tasks/rescue-{{ profile }}.yml"
+        rescue_script_path: "rescue-{{ profile }}.yml"
 
     - name: Determine if Rescue action is available
       stat:
